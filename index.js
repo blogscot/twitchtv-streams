@@ -5,6 +5,11 @@ import users from './data/user_data'
 import streams from './data/stream_data'
 
 const container = document.querySelector('#streams')
+const selectors = document.querySelectorAll('.selector')
+const allStreamsElement = document.querySelector('#select .all')
+const onlineStreamsElement = document.querySelector('#select .online')
+const offlineStreamsElement = document.querySelector('#select .offline')
+
 const offlineMessage = 'Offline'
 
 const userInfo = users.data.map(user => ({
@@ -58,4 +63,32 @@ const offlineStreams = mergedInfo.filter(
   stream => stream.message === offlineMessage
 )
 
-container.innerHTML = mergedInfo.map(displayStream).join('')
+const clearActive = () =>
+  selectors.forEach(selector => (selector.style.color = 'black'))
+
+const setActive = element => (element.style.color = 'white')
+
+const setStreamActive = element => {
+  clearActive()
+  setActive(element)
+}
+
+const displayAllStreams = () => {
+  setStreamActive(allStreamsElement)
+  container.innerHTML = mergedInfo.map(displayStream).join('')
+}
+const displayOnlineStreams = () => {
+  setStreamActive(onlineStreamsElement)
+  container.innerHTML = onlineStreams.map(displayStream).join('')
+}
+const displayOfflineStreams = () => {
+  setStreamActive(offlineStreamsElement)
+  container.innerHTML = offlineStreams.map(displayStream).join('')
+}
+// Initially display all streams
+displayAllStreams()
+
+// Event handlers
+allStreamsElement.addEventListener('click', displayAllStreams)
+onlineStreamsElement.addEventListener('click', displayOnlineStreams)
+offlineStreamsElement.addEventListener('click', displayOfflineStreams)
