@@ -1,6 +1,6 @@
 import './style.scss'
 
-// dev data
+// TODO: remove Dev Data
 import users from './data/user_data'
 import streams from './data/stream_data'
 
@@ -19,6 +19,11 @@ const streamInfo = streams.data.map(stream => ({
   title: stream.title,
 }))
 
+/**
+ * Merges information from User and Stream sources into a single
+ * coherent data structure.
+ *
+ */
 const mergedInfo = userInfo.map(info => {
   const liveStream = streamInfo.filter(stream => stream.id === info.id)
   const message = liveStream.length > 0 ? liveStream[0].title : offlineMessage
@@ -27,6 +32,11 @@ const mergedInfo = userInfo.map(info => {
   })
 })
 
+/**
+ * Displays the image, username and message for a single Twitch stream
+ * Extra styling is applied to offline streams.
+ *
+ */
 const displayStream = stream => {
   const { display_name, profile_image_url, message } = stream
   const offline = message === offlineMessage ? 'offline' : ''
@@ -41,9 +51,11 @@ const displayStream = stream => {
 `
 }
 
-const onlineStreams = mergedInfo.filter(info => info.message !== offlineMessage)
+const onlineStreams = mergedInfo.filter(
+  stream => stream.message !== offlineMessage
+)
 const offlineStreams = mergedInfo.filter(
-  info => info.message === offlineMessage
+  stream => stream.message === offlineMessage
 )
 
 container.innerHTML = mergedInfo.map(displayStream).join('')
