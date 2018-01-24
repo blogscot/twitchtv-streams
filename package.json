@@ -1,0 +1,15 @@
+{
+  "name": "twitchtv",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": {
+    "name": "Iain Diamond"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "devDependencies": {
+    "node-sass": "^4.7.2"
+  }
+}
