@@ -4,7 +4,7 @@ import './style.scss'
 import users from './data/user_data'
 import streams from './data/stream_data'
 
-const container = document.querySelector('#container')
+const container = document.querySelector('#streams')
 const offlineMessage = 'Offline'
 
 const userInfo = users.data.map(user => ({
