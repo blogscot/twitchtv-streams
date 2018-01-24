@@ -27,25 +27,28 @@ img {
 
   & > div {
     background: bisque;
-    font-size: 18px;
-    font-family: fantasy;
   }
 
   & > .user {
     display: grid;
-    grid-template-columns: 2fr 5fr;
+    grid-template-columns: 1fr 3fr;
     grid-auto-rows: 60px;
     grid-gap: 1px;
+    font-size: 18px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+      sans-serif;
     align-items: center;
     text-align: center;
 
     & > .status {
       padding-left: 1ch;
       text-align: start;
+      font-size: 18px;
+      font-family: 'Times New Roman', Times, serif;
+
+      &.offline {
+        text-align: center;
+      }
     }
   }
-}
-
-.user-offline {
-  text-align: center !important;
 }

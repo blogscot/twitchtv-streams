@@ -4,9 +4,8 @@ import './style.scss'
 import users from './data/user_data'
 import streams from './data/stream_data'
 
-const images = document.querySelectorAll('.icon img')
-const usernames = document.querySelectorAll('.user .username')
-const statuses = document.querySelectorAll('.user .status')
+const container = document.querySelector('#container')
+const offlineMessage = 'Offline'
 
 const userInfo = users.data.map(user => ({
   id: user.id,
@@ -22,20 +21,29 @@ const streamInfo = streams.data.map(stream => ({
 
 const mergedInfo = userInfo.map(info => {
   const liveStream = streamInfo.filter(stream => stream.id === info.id)
-  const message = liveStream.length > 0 ? liveStream[0].title : 'offline'
+  const message = liveStream.length > 0 ? liveStream[0].title : offlineMessage
   return Object.assign({}, info, {
     message,
   })
 })
 
-const userIndex = 1
-const { display_name, profile_image_url } = userInfo[userIndex]
-const { message } = mergedInfo[userIndex]
+const displayStream = stream => {
+  const { display_name, profile_image_url, message } = stream
+  const offline = message === offlineMessage ? 'offline' : ''
+  return `
+  <div class="icon">
+    <img src="${profile_image_url}" alt="${display_name} profile image">
+  </div>
+  <div class="user">
+    <div class="username">${display_name}</div>
+    <div class="status ${offline}">${message}</div>
+  </div>
+`
+}
 
-// Intialise user icons according to their profile_image_url
-images.forEach(img => {
-  img.src = profile_image_url
-  img.alt = `${display_name} profile image`
-})
-usernames.forEach(username => (username.innerText = display_name))
-statuses.forEach(status => (status.innerText = message))
+const onlineStreams = mergedInfo.filter(info => info.message !== offlineMessage)
+const offlineStreams = mergedInfo.filter(
+  info => info.message === offlineMessage
+)
+
+container.innerHTML = mergedInfo.map(displayStream).join('')
