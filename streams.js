@@ -1,33 +1,6 @@
-// TODO: remove Dev Data
-import users from './data/user_data'
-import streams from './data/stream_data'
+import { getUserData, getStreamData } from './fetchData'
 
 export const offlineMessage = 'Offline'
-
-const userInfo = users.data.map(user => ({
-  id: user.id,
-  display_name: user.display_name,
-  profile_image_url: user.profile_image_url,
-}))
-
-const streamInfo = streams.data.map(stream => ({
-  id: stream.user_id,
-  type: stream.type,
-  title: stream.title,
-}))
-
-/**
- * Merges information from User and Stream sources into a single
- * coherent data structure.
- *
- */
-export const mergedInfo = userInfo.map(info => {
-  const liveStream = streamInfo.filter(stream => stream.id === info.id)
-  const message = liveStream.length > 0 ? liveStream[0].title : offlineMessage
-  return Object.assign({}, info, {
-    message,
-  })
-})
 
 /**
  * Displays the image, username and message for a single Twitch stream
@@ -48,4 +21,42 @@ export const displayStream = stream => {
     <div class="status ${offline}">${message}</div>
   </div>
 `
+}
+
+/**
+ * Merges information from User and Stream sources into a single
+ * coherent data structure.
+ *
+ */
+const mergeInfo = (userInfo, streamInfo) =>
+  userInfo.map(info => {
+    const liveStream = streamInfo.filter(stream => stream.id === info.id)
+    const message = liveStream.length > 0 ? liveStream[0].title : offlineMessage
+    return Object.assign({}, info, {
+      message,
+    })
+  })
+
+/**
+ * Loads asynchronous User and Stream data from the server, then
+ * filters and merges data into single data structure.
+ */
+
+export const loadData = async () => {
+  const userData = await getUserData()
+  const streamData = await getStreamData()
+
+  const userInfo = userData.data.map(user => ({
+    id: user.id,
+    display_name: user.display_name,
+    profile_image_url: user.profile_image_url,
+  }))
+
+  const streamInfo = streamData.data.map(stream => ({
+    id: stream.user_id,
+    type: stream.type,
+    title: stream.title,
+  }))
+
+  return mergeInfo(userInfo, streamInfo)
 }

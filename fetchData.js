@@ -2,15 +2,15 @@ import clientID from './twitchInfo.js'
 
 const twitchStreams = [
   'ESL_SC2',
-  // 'Adam13531',
+  'Adam13531',
   'OgamingSC2',
-  // 'cretetion',
-  // 'freecodecamp',
-  // 'noopkat',
-  // 'storbeck',
-  // 'habathcx',
+  'cretetion',
+  'freecodecamp',
+  'noopkat',
+  'storbeck',
+  'SirMrE',
   'RobotCaleb',
-  // 'noobs2ninjas',
+  'funfunfunction',
 ]
 
 const twitchUrlPrefix = 'https://api.twitch.tv/helix'
