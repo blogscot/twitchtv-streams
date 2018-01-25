@@ -35,13 +35,20 @@ const streamsUrl =
   streamsUrlPrefix + buildParameters('user_login', twitchStreams)
 
 const fetchData = async url => {
-  const resp = await fetch(url, {
-    method: 'GET',
-    headers: new Headers({
-      'Client-ID': clientID,
-    }),
-  })
-  return await resp.json()
+  try {
+    const resp = await fetch(url, {
+      method: 'GET',
+      headers: new Headers({
+        'Client-ID': clientID,
+      }),
+    })
+    if (resp.ok) {
+      return await resp.json()
+    }
+    throw new Error(resp.statusText)
+  } catch (err) {
+    console.error('fetchData Server Error: ', err.message)
+  }
 }
 
 export const getUserData = () => fetchData(usersUrl)

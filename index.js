@@ -21,7 +21,9 @@ const setStreamActive = element => {
 
 const start = async () => {
   // load asynchronous server data
-  const mergedInfo = await loadData()
+  const mergedInfo = await loadData().catch(err =>
+    console.error('start: ', err.message)
+  )
 
   const onlineStreams = mergedInfo.filter(
     stream => stream.message !== offlineMessage
