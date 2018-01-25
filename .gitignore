@@ -3,4 +3,4 @@ node_modules/
 dist/
 data/
 research/
-twitch_info.js
+twitchInfo.js
