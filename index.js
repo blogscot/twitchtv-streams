@@ -1,62 +1,12 @@
 import './style.scss'
 
-// TODO: remove Dev Data
-import users from './data/user_data'
-import streams from './data/stream_data'
+import { offlineMessage, mergedInfo, displayStream } from './streams'
 
 const container = document.querySelector('#streams')
 const selectors = document.querySelectorAll('.selector')
 const allStreamsElement = document.querySelector('#select .all')
 const onlineStreamsElement = document.querySelector('#select .online')
 const offlineStreamsElement = document.querySelector('#select .offline')
-
-const offlineMessage = 'Offline'
-
-const userInfo = users.data.map(user => ({
-  id: user.id,
-  display_name: user.display_name,
-  profile_image_url: user.profile_image_url,
-}))
-
-const streamInfo = streams.data.map(stream => ({
-  id: stream.user_id,
-  type: stream.type,
-  title: stream.title,
-}))
-
-/**
- * Merges information from User and Stream sources into a single
- * coherent data structure.
- *
- */
-const mergedInfo = userInfo.map(info => {
-  const liveStream = streamInfo.filter(stream => stream.id === info.id)
-  const message = liveStream.length > 0 ? liveStream[0].title : offlineMessage
-  return Object.assign({}, info, {
-    message,
-  })
-})
-
-/**
- * Displays the image, username and message for a single Twitch stream
- * Extra styling is applied to offline streams.
- *
- */
-const displayStream = stream => {
-  const { display_name, profile_image_url, message } = stream
-  const offline = message === offlineMessage ? 'offline' : ''
-  return `
-  <div class="icon">
-    <img src="${profile_image_url}" alt="${display_name} profile image">
-  </div>
-  <div class="user">
-    <a target="_blank" href="https://www.twitch.tv/${display_name}">
-      <div class="username">${display_name}</div>
-    </a>
-    <div class="status ${offline}">${message}</div>
-  </div>
-`
-}
 
 const onlineStreams = mergedInfo.filter(
   stream => stream.message !== offlineMessage
@@ -65,6 +15,7 @@ const offlineStreams = mergedInfo.filter(
   stream => stream.message === offlineMessage
 )
 
+// Set / Clear Status Styles
 const clearActive = () =>
   selectors.forEach(selector => (selector.style.color = 'black'))
 
@@ -75,22 +26,24 @@ const setStreamActive = element => {
   setActive(element)
 }
 
-const displayAllStreams = () => {
-  setStreamActive(allStreamsElement)
+function displayAllStreams() {
+  setStreamActive(this)
   container.innerHTML = mergedInfo.map(displayStream).join('')
 }
-const displayOnlineStreams = () => {
-  setStreamActive(onlineStreamsElement)
+function displayOnlineStreams() {
+  setStreamActive(this)
   container.innerHTML = onlineStreams.map(displayStream).join('')
 }
-const displayOfflineStreams = () => {
-  setStreamActive(offlineStreamsElement)
+
+function displayOfflineStreams() {
+  setStreamActive(this)
   container.innerHTML = offlineStreams.map(displayStream).join('')
 }
-// Initially display all streams
-displayAllStreams()
 
 // Event handlers
 allStreamsElement.addEventListener('click', displayAllStreams)
 onlineStreamsElement.addEventListener('click', displayOnlineStreams)
 offlineStreamsElement.addEventListener('click', displayOfflineStreams)
+
+// Initially display all streams
+allStreamsElement.click()
