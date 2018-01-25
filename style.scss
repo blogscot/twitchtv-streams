@@ -63,6 +63,15 @@ img {
     align-items: center;
     text-align: center;
 
+    & > a {
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     & > .status {
       padding-left: 1ch;
       text-align: start;
