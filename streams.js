@@ -43,8 +43,10 @@ const mergeInfo = (userInfo, streamInfo) =>
  */
 
 export const loadData = async () => {
-  const userData = await getUserData()
-  const streamData = await getStreamData()
+  const [userData, streamData] = await Promise.all([
+    getUserData(),
+    getStreamData(),
+  ])
 
   const userInfo = userData.data.map(user => ({
     id: user.id,
