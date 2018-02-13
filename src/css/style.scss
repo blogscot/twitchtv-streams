@@ -85,6 +85,10 @@ body {
   justify-content: center;
   align-items: center;
 
+  img {
+    width: $icon-width;
+  }
+
   @include small-and-above {
     &:nth-child(3) {
       visibility: hidden;
