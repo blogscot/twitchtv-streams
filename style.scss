@@ -30,6 +30,7 @@ img {
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  background: bisque;
   border: 2px solid black;
 }
 
@@ -59,10 +60,11 @@ img {
 
 #streams {
   display: grid;
-  grid-template-columns: 80px 1fr;
+  grid-template-columns: 80px 200px 1fr;
   grid-auto-rows: 80px;
   grid-gap: 1px;
   align-items: center;
+  justify-items: center;
 
   & > div {
     background: bisque;
@@ -70,9 +72,7 @@ img {
 
   & > .user {
     display: grid;
-    grid-template-columns: 100px 1fr;
     grid-auto-rows: 80px;
-    grid-gap: 1px;
     font-size: 14px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
       sans-serif;

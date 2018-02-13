@@ -18,8 +18,8 @@ export const displayStream = stream => {
     <a target="_blank" href="https://www.twitch.tv/${display_name}">
       <div class="username">${display_name}</div>
     </a>
+    </div>
     <div class="status ${offline}">${message}</div>
-  </div>
 `
 }
 
