@@ -1,0 +1,156 @@
+@import 'colors.scss';
+@import 'mixins.scss';
+
+$icon-width: 100px;
+$heading-height: 40px;
+$row-height: 60px;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: aliceblue;
+  font-family: 'Helvetica Neue';
+
+  h1 {
+    text-align: center;
+    font-size: 4em;
+    margin-top: 5vh;
+    color: $primary-color-1;
+
+    @include medium-and-above {
+      font-size: 3em;
+    }
+
+    @include small-and-above {
+      font-size: 2.3em;
+    }
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  grid-column-gap: 1em;
+  width: 80vw;
+  margin: 10vh auto;
+
+  @include medium-and-above {
+    grid-template-columns: 1fr;
+    width: 98vw;
+    margin: 3vh auto;
+  }
+
+  @include small-and-above {
+    font-size: 14px;
+  }
+}
+
+.border-style {
+  border: 5px solid $primary-color-0;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px gray;
+}
+
+.streams {
+  background-color: $primary-color-1;
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: $icon-width 1fr 3fr;
+  grid-template-rows: $heading-height $icon-width;
+  grid-auto-rows: $icon-width;
+  align-items: center;
+  @extend .border-style;
+
+  @include medium-and-above {
+    order: 1;
+    margin-top: 20px;
+    border-width: 3px;
+    border-radius: 3px;
+  }
+
+  @include small-and-above {
+    grid-template-columns: $icon-width 1fr;
+    grid-template-rows: $heading-height 0px;
+    grid-gap: 1px;
+  }
+}
+
+.stream {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include small-and-above {
+    &:nth-child(3) {
+      visibility: hidden;
+    }
+  }
+
+  &:nth-child(3n + 1) {
+    background: $icon-color;
+  }
+
+  &:nth-child(3n + 2) {
+    background: $username-color;
+  }
+
+  &:nth-child(3n + 3) {
+    padding: 0 10px;
+    background: $status-color;
+    @include small-and-above {
+      padding-left: 10px;
+      grid-column: 1 / -1;
+    }
+  }
+
+  &.heading {
+    background-color: $heading-color;
+    color: $secondary-color-1;
+  }
+}
+
+.selectors {
+  display: grid;
+  grid-gap: 2px;
+  grid-template-rows: $heading-height repeat(3, $row-height);
+  background: $primary-color-1;
+  height: 235px;
+  color: $secondary-color-0;
+  @extend .border-style;
+
+  @include medium-and-above {
+    height: 233px;
+    width: 40vw;
+    margin-left: 30vw;
+    border-width: 3px;
+    border-radius: 3px;
+  }
+
+  @include small-and-above {
+    width: 60vw;
+    margin-left: 20vw;
+  }
+
+  & .selector {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $button-color;
+
+    &.heading {
+      background: $heading-color;
+    }
+
+    &:nth-child(2):hover,
+    &:nth-child(3):hover,
+    &:nth-child(4):hover {
+      cursor: pointer;
+    }
+  }
+}

@@ -1,8 +1,8 @@
-import './style.scss'
+import '../css/style.scss'
 
 import { displayStream, loadData, offlineMessage } from './streams'
 
-const container = document.querySelector('#streams')
+const streams = document.querySelector('.streams')
 const selectors = document.querySelectorAll('.selector')
 const allStreamsElement = document.querySelector('#select .all')
 const onlineStreamsElement = document.querySelector('#select .online')
@@ -32,18 +32,26 @@ const start = async () => {
     stream => stream.message === offlineMessage
   )
 
+  // Display Streams
+  const header = `
+<div class="stream heading">Icon</div>
+<div class="stream heading">Username</div>
+<div class="stream heading">Status</div>
+`
+  streams.innerHTML = header
+
   function displayAllStreams() {
     setStreamActive(this)
-    container.innerHTML = mergedInfo.map(displayStream).join('')
+    streams.innerHTML = mergedInfo.map(displayStream).join('')
   }
   function displayOnlineStreams() {
     setStreamActive(this)
-    container.innerHTML = onlineStreams.map(displayStream).join('')
+    streams.innerHTML = onlineStreams.map(displayStream).join('')
   }
 
   function displayOfflineStreams() {
     setStreamActive(this)
-    container.innerHTML = offlineStreams.map(displayStream).join('')
+    streams.innerHTML = offlineStreams.map(displayStream).join('')
   }
 
   // Event handlers
@@ -52,7 +60,7 @@ const start = async () => {
   offlineStreamsElement.addEventListener('click', displayOfflineStreams)
 
   // Initially display all streams
-  allStreamsElement.click()
+  // allStreamsElement.click()
 }
 
 start()
