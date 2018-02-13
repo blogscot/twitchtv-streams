@@ -11,16 +11,16 @@ export const displayStream = stream => {
   const { display_name, profile_image_url, message } = stream
   const offline = message === offlineMessage ? 'offline' : ''
   return `
-  <div class="icon">
+  <div class="stream">
     <img src="${profile_image_url}" alt="${display_name} profile image">
   </div>
-  <div class="user">
+  <div class="stream">
     <a target="_blank" href="https://www.twitch.tv/${display_name}">
       <div class="username">${display_name}</div>
     </a>
-    </div>
-    <div class="status ${offline}">${message}</div>
-`
+  </div>
+  <div class="stream ${offline}">${message}</div>
+  `
 }
 
 /**

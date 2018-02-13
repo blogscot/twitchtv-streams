@@ -4,9 +4,9 @@ import { displayStream, loadData, offlineMessage } from './streams'
 
 const streams = document.querySelector('.streams')
 const selectors = document.querySelectorAll('.selector')
-const allStreamsElement = document.querySelector('#select .all')
-const onlineStreamsElement = document.querySelector('#select .online')
-const offlineStreamsElement = document.querySelector('#select .offline')
+const allStreamsElement = document.querySelector('.selector.all')
+const onlineStreamsElement = document.querySelector('.selector.online')
+const offlineStreamsElement = document.querySelector('.selector.offline')
 
 // Set / Clear Status Styles
 const clearActive = () =>
@@ -33,25 +33,29 @@ const start = async () => {
   )
 
   // Display Streams
-  const header = `
+  const displayHeader = () => {
+    streams.innerHTML = `
 <div class="stream heading">Icon</div>
 <div class="stream heading">Username</div>
 <div class="stream heading">Status</div>
 `
-  streams.innerHTML = header
+  }
 
   function displayAllStreams() {
     setStreamActive(this)
-    streams.innerHTML = mergedInfo.map(displayStream).join('')
+    displayHeader()
+    streams.innerHTML += mergedInfo.map(displayStream).join('')
   }
   function displayOnlineStreams() {
+    displayHeader()
     setStreamActive(this)
-    streams.innerHTML = onlineStreams.map(displayStream).join('')
+    streams.innerHTML += onlineStreams.map(displayStream).join('')
   }
 
   function displayOfflineStreams() {
+    displayHeader()
     setStreamActive(this)
-    streams.innerHTML = offlineStreams.map(displayStream).join('')
+    streams.innerHTML += offlineStreams.map(displayStream).join('')
   }
 
   // Event handlers
@@ -60,7 +64,7 @@ const start = async () => {
   offlineStreamsElement.addEventListener('click', displayOfflineStreams)
 
   // Initially display all streams
-  // allStreamsElement.click()
+  allStreamsElement.click()
 }
 
 start()
